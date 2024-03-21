@@ -12,10 +12,14 @@ set(CMAKE_C_STANDARD 17)
 
 include_directories (include)
 
-set(CMAKE_C_COMPILER "gcc")
-set(CMAKE_C_FLAGS "-Wall -Wextra -Werror -Wpedantic -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-but-set-variable -Wno-unused-value -Wno-unused-label -Wno-unused-local-typedefs")
-
-
 file(GLOB_RECURSE SOURCES "src/*.c")
 
 add_executable(${PROJECT_NAME} ${SOURCES})
+
+add_subdirectory(lib/libdyn)
+add_subdirectory(lib/libsta)
+
+target_include_directories(${PROJECT_NAME} PUBLIC lib/libdyn/include)
+target_include_directories(${PROJECT_NAME} PUBLIC lib/libsta/include)
+
+target_link_libraries(${PROJECT_NAME} dynamicLibrary staticLibrary)
